@@ -7,24 +7,6 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    driver_status(
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        status ENUM('Active', 'Retired', 'Dead')
-    );
-
-CREATE TABLE
-    team_status(
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        status ENUM("Active", "Inactive")
-    );
-
-CREATE TABLE
-    circuit_type(
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        type ENUM("Street", "Oval", "Circuit")
-    );
-
-CREATE TABLE
     nationality(
         id INT AUTO_INCREMENT PRIMARY KEY,
         contry VARCHAR(50)
@@ -37,17 +19,15 @@ CREATE TABLE
         lastname VARCHAR(50),
         dob DATE,
         id_nationality INT NOT NULL,
-        id_status INT NOT NULL,
-        FOREIGN KEY(id_nationality) REFERENCES nationality(id),
-        FOREIGN KEY(id_status) REFERENCES driver_status(id)
+        status ENUM("Active", "Retired", "Dead"),
+        FOREIGN KEY(id_nationality) REFERENCES nationality(id)
     );
 
 CREATE TABLE
     team(
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50),
-        id_status INT NOT NULL,
-        FOREIGN KEY(id_status) REFERENCES team_status(id)
+        status ENUM("Active", "Inactive")
     );
 
 CREATE TABLE
@@ -64,10 +44,9 @@ CREATE TABLE
         length DECIMAL(15, 2),
         name VARCHAR(50),
         adress VARCHAR(255),
+        type ENUM("Street", "Oval", "Circuit"),
         id_nationality INT NOT NULL,
-        id_circuit_type INT NOT NULL,
-        FOREIGN KEY(id_nationality) REFERENCES nationality(id),
-        FOREIGN KEY(id_circuit_type) REFERENCES circuit_type(id)
+        FOREIGN KEY(id_nationality) REFERENCES nationality(id)
     );
 
 CREATE TABLE
